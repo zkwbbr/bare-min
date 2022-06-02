@@ -1,0 +1,46 @@
+{
+    "name": "zkwbbr/bare-min",
+    "type": "project",
+    "description": "Bare minimum framework",
+    "keywords": ["php", "authentication", "auth", "one-time password", "login", "email token"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zkwbbr/bare-min contributors",
+            "homepage": "https://github.com/zkwbbr/bare-min/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "metarush/email-fallback": "4.0.*",
+        "metarush/data-mapper": "1.7.*",
+        "metarush/log-once": "1.0.*",
+        "metarush/lang": "1.0.*",
+        "metarush/firewall": "1.1.*",
+        "metarush/getter": "3.2.*",
+        "zkwbbr/view": "1.2.*",
+        "zkwbbr/utils": "2.1.*",
+        "robmorgan/phinx": "0.12.*",
+        "respect/validation": "2.2.*",
+        "filp/whoops": "2.14.*",
+        "laminas/laminas-diactoros": "2.7.*",
+        "laminas/laminas-httphandlerrunner": "2.1.*",
+        "league/route": "5.1.*",
+        "league/container": "4.1.*",
+        "middlewares/shutdown": "2.0.*",
+        "nyholm/dsn": "2.0.*",
+        "voku/anti-xss": "4.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src",
+            "Tests\\": "tests\\unit"
+        }
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master"
+    },
+    "config": {
+        "platform-check": true
+    }
+}

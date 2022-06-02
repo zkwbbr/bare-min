@@ -1,0 +1,20 @@
+# ------------------------------
+# system config
+# ------------------------------
+
+appName: # name of your app without spaces
+
+timezoneOnCreate: UTC # recommended to use UTC when storing time then just adjust time upon read
+timezoneOnRead: UTC # change to your local timezone
+
+dateTimeMysqlFormat: Y-m-d H:i:s
+dateTimeHumanFormat: r
+
+viewsPath: Views/Default/
+
+languagesPath: src/App/Languages/
+language: en-US
+
+# ------------------------------
+# app config
+# ------------------------------

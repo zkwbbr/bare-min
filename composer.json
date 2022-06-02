@@ -2,7 +2,7 @@
     "name": "zkwbbr/bare-min",
     "type": "project",
     "description": "Bare minimum framework",
-    "keywords": ["php", "authentication", "auth", "one-time password", "login", "email token"],
+    "keywords": ["php", "framework", "minimum", "minimalist"],
     "license": "MIT",
     "authors": [
         {

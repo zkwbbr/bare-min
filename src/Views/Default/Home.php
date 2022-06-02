@@ -1,1 +1,1 @@
-home
+<h1>Welcome to your homepage!</h1>

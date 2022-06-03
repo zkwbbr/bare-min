@@ -16,5 +16,12 @@ languagesPath: src/App/Languages/
 language: en-US
 
 # ------------------------------
+# db tables
+# ------------------------------
+
+errorLogTable: errorLog
+optionsTable: options
+
+# ------------------------------
 # app config
 # ------------------------------

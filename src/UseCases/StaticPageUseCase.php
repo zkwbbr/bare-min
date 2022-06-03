@@ -38,7 +38,7 @@ class StaticPageUseCase extends AppControllerAbstract
 
         // ------------------------------------------------
 
-        $page['/about'] = 'About | ' . $this->cfg->getSiteName();
+        $page['/about'] = 'About | ' . $this->cfg->getAppName();
 
         $this->data['metaTitle'] = $page[$uriPath];
 

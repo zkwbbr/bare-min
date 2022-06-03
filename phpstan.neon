@@ -1,0 +1,9 @@
+parameters:
+
+	excludePaths:
+		- %rootDir%/../../../src/Views/
+		- %rootDir%/../../../src/Config/
+		- %rootDir%/../../../src/Framework/middlewares.php
+		- %rootDir%/../../../src/Framework/routes.php
+
+	ignoreErrors:

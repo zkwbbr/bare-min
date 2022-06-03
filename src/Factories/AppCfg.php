@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Factories;
 
+use App\Config\Cfg;
+
 class AppCfg
 {
-    public static function getInstance(): \App\Config\Cfg
+    public static function getInstance(): Cfg
     {
         $diContainer = DiContainer::getInstance();
 
-        /** @var T $appCfg */
-        $appCfg = $diContainer->get(\App\Config\Cfg::class);
+        /** @var Cfg $appCfg */
+        $appCfg = $diContainer->get(Cfg::class);
 
         return $appCfg;
     }

@@ -17,7 +17,6 @@ use Laminas\Diactoros\Response;
 abstract class BaseControllerAbstract
 {
     protected Cfg $cfg;
-    protected Session $session;
     protected FactoryService $factoryService;
     protected ResponseInterface $serverResponse;
 
@@ -80,8 +79,10 @@ abstract class BaseControllerAbstract
 
     private function getAutoDetectedView(): string
     {
+        $useCaseFileName = '';
         $backtrace = \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-        $useCaseFileName = $backtrace[1]['file'];
+        if (isset($backtrace[1]['file']))
+            $useCaseFileName = $backtrace[1]['file'];
 
         $useCaseFileName = \strrchr($useCaseFileName, '/');
         $useCaseFileName = $useCaseFileName ? $useCaseFileName : '';

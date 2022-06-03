@@ -1,15 +1,21 @@
 # CHANGELOG
 
+## 1.0.2 - 2022-06-04
+
+### Fixed
+
+- Fixed issues pointed out by phpstan.
+
 ## 1.0.1 - 2022-06-03
 
 ### Added
 
-- Added logs/app/errors/ folder
-- Added keywords in composer.json
+- Added logs/app/errors/ folder.
+- Added keywords in composer.json.
 
 ### Changed
 
-- Changed welcome message in Home in Views
+- Changed welcome message in Home in Views.
 
 ## 1.0.0 - 2022-06-03
 

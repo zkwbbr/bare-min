@@ -20,7 +20,7 @@ use Zkwbbr\Utils\AdjustedDateTimeByTimeZone;
 // Note: You might not need this anymore in PHP 8
 // https://php.watch/versions/8.0/throwable-stacktrace-param-max-length
 // ------------------------------------------------
-function getTraceAsStringUntruncated($ex)
+function getTraceAsStringUntruncated(\Exception $ex): string
 {
     $count = 0;
     $trace = $ex->getTrace();
@@ -94,6 +94,7 @@ function getTraceAsStringUntruncated($ex)
 
 $whoops = new \Whoops\Run;
 
+/** @var \League\Container\Container $diContainer */
 $whoops->pushHandler(function ($ex) use ($diContainer) {
 
     $errorHash = (string) \crc32($ex->getMessage() . $ex->getFile() . $ex->getLine() . $ex->getTraceAsString());
@@ -118,8 +119,7 @@ $whoops->pushHandler(function ($ex) use ($diContainer) {
 
     // ------------------------------------------------
 
-    if (APP_DEVELOPMENT_MODE) {
-
+    if (APP_DEVELOPMENT_MODE) { // @phpstan-ignore-line
         $adapter = new FileSystemLogger(APP_ERROR_LOG_DIR);
 
         (new LogOnce($adapter))
@@ -130,9 +130,9 @@ $whoops->pushHandler(function ($ex) use ($diContainer) {
 
     } else {
 
-        $encryptedCreds = \file_get_contents(APP_CREDS_PATH_PROD);
+        $encryptedCreds = (string) \file_get_contents(APP_CREDS_PATH_PROD);
         $credsYaml = \Zkwbbr\Utils\Decrypted::x($encryptedCreds, APP_CREDS_KEY);
-        $creds = \Symfony\Component\Yaml\Yaml::parse($credsYaml);
+        $creds = (array) \Symfony\Component\Yaml\Yaml::parse($credsYaml);
         $appCfg = new \App\Config\App($creds);
 
         // ------------------------------------------------
@@ -143,6 +143,7 @@ $whoops->pushHandler(function ($ex) use ($diContainer) {
 
         $pushoverBody = $ex->getMessage() . ' on ' . $ex->getFile() . ' (' . $ex->getLine() . ') Code: ' . $ex->getCode();
 
+        /** @var \MetaRush\Notifier\Notifier $pushoverNotifier */
         $pushoverNotifier = (new PushoverNotifier)
             ->addAccount($appCfg->getPushoverAppKey(), $appCfg->getPushoverUserKey())
             ->setSubject($subject)
@@ -171,6 +172,7 @@ $whoops->pushHandler(function ($ex) use ($diContainer) {
             ->setAdminEmails($appCfg->getAdminEmails())
             ->setNotificationFromEmail($appCfg->getNoReplyEmail());
 
+        /** @var \MetaRush\Notifier\Notifier $emailNotifier */
         $emailNotifier = (new EmailNotifier)
             ->setEmailFallbackBuilder($emailBuilder)
             ->build();
@@ -186,6 +188,7 @@ $whoops->pushHandler(function ($ex) use ($diContainer) {
 
         try {
 
+            /** @var \MetaRush\DataMapper\DataMapper $dataMapper */
             $dataMapper = $diContainer->get(\MetaRush\DataMapper\DataMapper::class);
 
             $adapter = new PdoLogger($dataMapper, $appCfg->getErrorLogTable());
@@ -205,6 +208,7 @@ $whoops->pushHandler(function ($ex) use ($diContainer) {
 
             // ------------------------------------------------
 
+            /** @var \MetaRush\Notifier\Notifier $backupPushoverNotifier */
             $backupPushoverNotifier = (new PushoverNotifier)
                 ->addAccount($appCfg->getPushoverAppKey(), $appCfg->getPushoverUserKey())
                 ->setSubject($backupSubject)
@@ -222,6 +226,7 @@ $whoops->pushHandler(function ($ex) use ($diContainer) {
                 ->setAdminEmails($appCfg->getAdminEmails())
                 ->setNotificationFromEmail($appCfg->getNoReplyEmail());
 
+            /** @var \MetaRush\Notifier\Notifier $backupEmailNotifier */
             $backupEmailNotifier = (new EmailNotifier)
                 ->setEmailFallbackBuilder($backupEmailBuilder)
                 ->build();
@@ -245,7 +250,7 @@ $whoops->pushHandler(function ($ex) use ($diContainer) {
     // send response to user/client
     // ----------------------------------------------
 
-    $msg = \file_get_contents(__DIR__ . '/../Views/Default/error.php');
+    $msg = (string) \file_get_contents(__DIR__ . '/../Views/Default/error.php');
     $msg = \str_replace('{{errorCode}}', $errorHash, $msg);
 
     $response = new \Laminas\Diactoros\Response;

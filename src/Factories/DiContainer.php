@@ -10,7 +10,7 @@ class DiContainer
     {
         $diContainer = require __DIR__ . '/../Framework/dependencies.php';
 
-        return \call_user_func($diContainer);
+        return \call_user_func($diContainer); // @phpstan-ignore-line
     }
 
 }

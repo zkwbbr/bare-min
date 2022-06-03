@@ -18,6 +18,7 @@
         "metarush/lang": "1.0.*",
         "metarush/firewall": "1.1.*",
         "metarush/getter": "3.2.*",
+        "metarush/cookie-sessions": "2.0.*",
         "zkwbbr/view": "1.2.*",
         "zkwbbr/utils": "2.1.*",
         "robmorgan/phinx": "0.12.*",
@@ -29,7 +30,8 @@
         "league/container": "4.1.*",
         "middlewares/shutdown": "2.0.*",
         "nyholm/dsn": "2.0.*",
-        "voku/anti-xss": "4.1.*"
+        "voku/anti-xss": "4.1.*",
+        "phpstan/phpstan": "1.7.*"
     },
     "autoload": {
         "psr-4": {

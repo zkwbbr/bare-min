@@ -25,17 +25,17 @@ final class ContainerService extends AbstractServiceProvider
 
     public function register(): void
     {
-        $credsPath = APP_DEVELOPMENT_MODE ? APP_CREDS_PATH_DEV : APP_CREDS_PATH_PROD;
-        $encryptedCreds = \file_get_contents($credsPath);
+        $credsPath = APP_DEVELOPMENT_MODE ? APP_CREDS_PATH_DEV : APP_CREDS_PATH_PROD; // @phpstan-ignore-line
+        $encryptedCreds = (string) \file_get_contents($credsPath);
         $credsYaml = \Zkwbbr\Utils\Decrypted::x($encryptedCreds, APP_CREDS_KEY);
-        $creds = \Symfony\Component\Yaml\Yaml::parse($credsYaml);
+        $creds = (array) \Symfony\Component\Yaml\Yaml::parse($credsYaml);
         $appCfg = new \App\Config\App($creds);
 
         // ------------------------------------------------
 
         $prodDbDsn = \Nyholm\Dsn\DsnParser::parse($appCfg->getDbDsn());
 
-        $dbName = \trim($prodDbDsn->getPath(), '/');
+        $dbName = \trim((string) $prodDbDsn->getPath(), '/');
 
         // ------------------------------------------------
 

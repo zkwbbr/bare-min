@@ -27,9 +27,10 @@ final class AntiXssMiddleware implements MiddlewareInterface
 
         $data = $this->arrayMapRecursive(
             function ($item) {
-            $s = (new AntiXSS())->xss_clean($item);
-            $s = \strip_tags((string) $s); // we need to \strip_tags() because AntiXSS does not strip all HTML tags
-            return $s;
+                $s = (new AntiXSS())->xss_clean($item); // @phpstan-ignore-line
+                if (\is_string($s))
+                    $s = \strip_tags($s); // we need to \strip_tags() because AntiXSS does not strip all HTML tags
+                return $s;
             },
             $decodedContents
         );

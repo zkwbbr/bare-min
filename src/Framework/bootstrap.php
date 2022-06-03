@@ -28,13 +28,13 @@ require APP_ROOT_DIR . 'vendor/autoload.php';
 
 \define('APP_DEVELOPMENT_MODE', \file_exists(APP_ROOT_DIR . '.development_mode'));
 \define('APP_ERROR_LOG_DIR', APP_ROOT_DIR . 'logs/app/error/'); // used by /src/Framework/whoops.php
-\define('APP_ERROR_LOG_TIMEZONE', 'UTC'); // set this to the timezone of whoever reads the error logs
-\define('APP_SESSION_NAME', ''); // 12 chars alphanumeric (can't be all numbers)
+\define('APP_ERROR_LOG_TIMEZONE', 'Asia/Manila'); // set this to the timezone of whoever reads the error logs
+\define('APP_SESSION_NAME', 'RFmQGk2c7ZK0'); // 12 chars alphanumeric (can't be all numbers)
 \define('APP_SESSION_TIMEOUT', '3600'); // in seconds
 \define('APP_SESSION_PATH', ''); // use custom session save path (without trailing slash) or blank to disable
-\define('APP_CREDS_PATH_DEV', '');
-\define('APP_CREDS_PATH_PROD', '');
-\define('APP_CREDS_KEY', '');
+\define('APP_CREDS_PATH_DEV', __DIR__ . '/../../config/creds/dev.creds.yaml.enc');
+\define('APP_CREDS_PATH_PROD', __DIR__ . '/../../config/creds/prod.creds.yaml.enc');
+\define('APP_CREDS_KEY', \App\Config\Key::getKey());
 
 // ------------------------------------------------
 
@@ -58,7 +58,7 @@ if ($phpSapiName != 'cli')
 \ini_set('session.gc_maxlifetime', APP_SESSION_TIMEOUT);
 \ini_set('session.cache_limiter', 'private_no_expire'); // this is important when using HTTP caching with sessions (e.g., Cache-Control, ETags). More info: https://github.com/micheh/psr7-cache/issues/4. But, you might not want to use this as this also caches logged-in pages, which makes logging off tricky. Make sure to explictly set max-age if you use this feature.
 
-if (APP_SESSION_PATH)
+if (APP_SESSION_PATH) // @phpstan-ignore-line
     \ini_set('session.save_path', APP_SESSION_PATH);
 
 if (!APP_DEVELOPMENT_MODE)
@@ -110,11 +110,11 @@ $request = \Laminas\Diactoros\ServerRequestFactory::fromGlobals(
 // build a valid HTTP response or HTTP error response if any
 try {
 
-    $response = $router->dispatch($request);
+    $response = $router->dispatch($request); // @phpstan-ignore-line
 
 } catch (\League\Route\Http\Exception $ex) {
 
-    $msg = \file_get_contents(__DIR__ . '/../Views/Default/stop.php');
+    $msg = (string) \file_get_contents(__DIR__ . '/../Views/Default/stop.php');
     $msg = \str_replace('<?=$stopMessage?>', '<b>Error ' . $ex->getStatusCode() . '</b><br />' . $ex->getMessage(), $msg);
 
     $response = new \Laminas\Diactoros\Response;

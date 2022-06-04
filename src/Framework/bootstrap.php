@@ -28,13 +28,10 @@ require APP_ROOT_DIR . 'vendor/autoload.php';
 
 \define('APP_DEVELOPMENT_MODE', \file_exists(APP_ROOT_DIR . '.development_mode'));
 \define('APP_ERROR_LOG_DIR', APP_ROOT_DIR . 'logs/app/error/'); // used by /src/Framework/whoops.php
-\define('APP_ERROR_LOG_TIMEZONE', 'Asia/Manila'); // set this to the timezone of whoever reads the error logs
-\define('APP_SESSION_NAME', 'RFmQGk2c7ZK0'); // 12 chars alphanumeric (can't be all numbers)
+\define('APP_ERROR_LOG_TIMEZONE', 'UTC'); // set this to the timezone of whoever reads the error logs
+\define('APP_SESSION_NAME', ''); // 12 chars alphanumeric (can't be all numbers)
 \define('APP_SESSION_TIMEOUT', '3600'); // in seconds
 \define('APP_SESSION_PATH', ''); // use custom session save path (without trailing slash) or blank to disable
-\define('APP_CREDS_PATH_DEV', __DIR__ . '/../../config/creds/dev.creds.yaml.enc');
-\define('APP_CREDS_PATH_PROD', __DIR__ . '/../../config/creds/prod.creds.yaml.enc');
-\define('APP_CREDS_KEY', \App\Config\Key::getKey());
 
 // ------------------------------------------------
 

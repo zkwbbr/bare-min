@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.3 - 2022-06-05
+
+### Fixed
+
+- Fixed Whoops issues in prod mode
+
 ## 1.0.2 - 2022-06-04
 
 ### Fixed

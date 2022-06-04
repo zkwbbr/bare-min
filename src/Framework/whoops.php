@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Config\Cfg;
 use MetaRush\LogOnce\LogOnce;
 use MetaRush\LogOnce\Pdo\Adapter as PdoLogger;
 use MetaRush\LogOnce\FileSystem\Adapter as FileSystemLogger;
@@ -130,8 +131,8 @@ $whoops->pushHandler(function ($ex) use ($diContainer) {
 
     } else {
 
-        $encryptedCreds = (string) \file_get_contents(APP_CREDS_PATH_PROD);
-        $credsYaml = \Zkwbbr\Utils\Decrypted::x($encryptedCreds, APP_CREDS_KEY);
+        $encryptedCreds = (string) \file_get_contents(__DIR__ . '/../../' . Cfg::prodCredsPath);
+        $credsYaml = \Zkwbbr\Utils\Decrypted::x($encryptedCreds, \App\Config\Key::getKey());
         $creds = (array) \Symfony\Component\Yaml\Yaml::parse($credsYaml);
         $appCfg = new \App\Config\App($creds);
 

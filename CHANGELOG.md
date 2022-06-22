@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 1.0.5 - 2022-06-22
+
+### Added
+
+- Add ability to use custom layouts
+- Add Validators and Exceptions
+
+## 1.0.4 - 2022-06-07
+
+### Fixed
+
+- Change param #1 of getTraceAsStringUntruncated() to \Throwable in whoops.php
+
 ## 1.0.3 - 2022-06-05
 
 ### Fixed

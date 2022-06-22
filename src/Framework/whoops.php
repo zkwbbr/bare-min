@@ -21,7 +21,7 @@ use Zkwbbr\Utils\AdjustedDateTimeByTimeZone;
 // Note: You might not need this anymore in PHP 8
 // https://php.watch/versions/8.0/throwable-stacktrace-param-max-length
 // ------------------------------------------------
-function getTraceAsStringUntruncated(\Exception $ex): string
+function getTraceAsStringUntruncated(\Throwable $ex): string
 {
     $count = 0;
     $trace = $ex->getTrace();

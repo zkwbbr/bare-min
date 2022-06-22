@@ -45,13 +45,14 @@ abstract class BaseControllerAbstract
 
     /**
      *
-     * @param mixed[] $data
+     * @param array $data
      * @param string|null $view
      * @param bool $useLayout
-     * @param int $status
+     * @param string|null $layoutFile
+     * @param int|null $status
      * @return ResponseInterface
      */
-    protected function getView(array $data = [], ?string $view = null, bool $useLayout = true, int $status = 200): ResponseInterface
+    protected function getView(array $data = [], ?string $view = null, bool $useLayout = true, ?string $layoutFile = null, ?int $status = 200): ResponseInterface
     {
         $view ??= $this->getAutoDetectedView();
 
@@ -64,11 +65,14 @@ abstract class BaseControllerAbstract
         $viewsPath = \ucwords($viewsPath);
         $viewsPath = \str_replace(' ', '/', $viewsPath);
 
+        // determine layout file
+        $layoutFile ??= 'defaultLayout';
+
         $view = (new View)
             ->setData($data)
             ->setTemplateDir(__DIR__ . '/../' . $viewsPath)
             ->setTemplateVar('appViewContent')
-            ->setLayoutFile('layout')
+            ->setLayoutFile($layoutFile)
             ->setTemplate($view)
             ->setUseLayout($useLayout)
             ->setStatus($status)

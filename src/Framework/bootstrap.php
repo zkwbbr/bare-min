@@ -26,7 +26,7 @@ require APP_ROOT_DIR . 'vendor/autoload.php';
 // fundamental config
 // ----------------------------------------------
 
-\define('APP_DEVELOPMENT_MODE', \file_exists(APP_ROOT_DIR . '.development_mode'));
+\define('APP_DEVELOPMENT_MODE', \getenv('APP_ENV') == 'dev');
 \define('APP_ERROR_LOG_DIR', APP_ROOT_DIR . 'logs/app/error/'); // used by /src/Framework/whoops.php
 \define('APP_ERROR_LOG_TIMEZONE', 'UTC'); // set this to the timezone of whoever reads the error logs
 \define('APP_SESSION_NAME', ''); // 12 chars alphanumeric (can't be all numbers)

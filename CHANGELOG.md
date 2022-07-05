@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.6 - 2022-07-06
+
+### Fixed
+
+- Use \getenv('APP_ENV') instead of .development_mode to determine if project is in dev mode
+
 ## 1.0.5 - 2022-06-22
 
 ### Added

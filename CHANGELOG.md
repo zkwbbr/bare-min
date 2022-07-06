@@ -1,23 +1,16 @@
 # CHANGELOG
 
-<<<<<<< HEAD
-=======
 ## 1.0.7 - 2022-07-07
 
 ### Fixed
 
 - Fix credentials path in ContainerService.
 
->>>>>>> dev
 ## 1.0.6 - 2022-07-06
 
 ### Fixed
 
-<<<<<<< HEAD
-- Use \getenv('APP_ENV') instead of .development_mode to determine if project is in dev mode
-=======
 - Use \getenv('APP_ENV') instead of .development_mode to determine if project is in dev mode.
->>>>>>> dev
 
 ## 1.0.5 - 2022-06-22
 

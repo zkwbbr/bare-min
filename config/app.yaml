@@ -15,8 +15,7 @@ viewsPath: Views/Default/
 languagesPath: src/App/Languages/
 language: en-US
 
-devCredsPath:
-prodCredsPath:
+credsPath:
 
 # ------------------------------
 # db tables

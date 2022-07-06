@@ -1,23 +1,35 @@
 # CHANGELOG
 
+## 1.0.7 - 2022-07-07
+
+### Fixed
+
+- Fix credentials path in ContainerService.
+
+## 1.0.6 - 2022-07-06
+
+### Fixed
+
+- Use \getenv('APP_ENV') instead of .development_mode to determine if project is in dev mode.
+
 ## 1.0.5 - 2022-06-22
 
 ### Added
 
-- Add ability to use custom layouts
-- Add Validators and Exceptions
+- Add ability to use custom layouts.
+- Add Validators and Exceptions.
 
 ## 1.0.4 - 2022-06-07
 
 ### Fixed
 
-- Change param #1 of getTraceAsStringUntruncated() to \Throwable in whoops.php
+- Change param #1 of getTraceAsStringUntruncated() to \Throwable in whoops.php.
 
 ## 1.0.3 - 2022-06-05
 
 ### Fixed
 
-- Fixed Whoops issues in prod mode
+- Fixed Whoops issues in prod mode.
 
 ## 1.0.2 - 2022-06-04
 

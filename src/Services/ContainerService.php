@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Config\Cfg;
+use MetaRush\DataMapper;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 /**
@@ -15,9 +17,9 @@ final class ContainerService extends AbstractServiceProvider
     public function provides(string $id): bool
     {
         $classes = [
-            \App\Config\Cfg::class,
-            \MetaRush\DataMapper\Config::class,
-            \MetaRush\DataMapper\DataMapper::class
+            Cfg::class,
+            DataMapper\Config::class,
+            DataMapper\DataMapper::class
         ];
 
         return \in_array($id, $classes);
@@ -25,9 +27,8 @@ final class ContainerService extends AbstractServiceProvider
 
     public function register(): void
     {
-        $credsPath = APP_DEVELOPMENT_MODE ? APP_CREDS_PATH_DEV : APP_CREDS_PATH_PROD; // @phpstan-ignore-line
-        $encryptedCreds = (string) \file_get_contents($credsPath);
-        $credsYaml = \Zkwbbr\Utils\Decrypted::x($encryptedCreds, APP_CREDS_KEY);
+        $encryptedCreds = (string) \file_get_contents(__DIR__ . '/../../' . Cfg::credsPath);
+        $credsYaml = \Zkwbbr\Utils\Decrypted::x($encryptedCreds, \App\Config\Key::getKey());
         $creds = (array) \Symfony\Component\Yaml\Yaml::parse($credsYaml);
         $appCfg = new \App\Config\App($creds);
 
@@ -40,7 +41,7 @@ final class ContainerService extends AbstractServiceProvider
         // ------------------------------------------------
 
         $this->getContainer()
-            ->add(\MetaRush\DataMapper\Config::class)
+            ->add(DataMapper\Config::class)
             ->addMethodCall('setDsn', ['mysql:host=' . $prodDbDsn->getHost() . ';dbname=' . $dbName])
             ->addMethodCall('setDbUser', [$prodDbDsn->getUser()])
             ->addMethodCall('setDbPass', [$prodDbDsn->getPassword()]);
@@ -48,14 +49,14 @@ final class ContainerService extends AbstractServiceProvider
         // ------------------------------------------------
 
         $this->getContainer()
-            ->add(\MetaRush\DataMapper\DataMapper::class)
-            ->addArgument($this->getContainer()->get(\MetaRush\DataMapper\Adapters\AtlasQuery::class));
+            ->add(DataMapper\DataMapper::class)
+            ->addArgument($this->getContainer()->get(DataMapper\Adapters\AtlasQuery::class));
 
         // ------------------------------------------------
 
         $this->getContainer()
-            ->add(\App\Config\Cfg::class)
-            ->addArgument($this->getContainer()->get(\MetaRush\DataMapper\DataMapper::class))
+            ->add(Cfg::class)
+            ->addArgument($this->getContainer()->get(DataMapper\DataMapper::class))
             ->addArgument($creds);
     }
 

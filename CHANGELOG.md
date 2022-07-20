@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.8 - 2022-07-21
+
+### Fixed
+
+- Use autoDetectedTemplate() in Zkwbbr\View instead of our own.
+
 ## 1.0.7 - 2022-07-07
 
 ### Fixed

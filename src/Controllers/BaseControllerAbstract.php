@@ -36,7 +36,7 @@ abstract class BaseControllerAbstract
         $this->serverResponse = new Response;
     }
 
-    private function getHttpResponse(string $data, int $status = 200): ResponseInterface
+    protected function getHttpResponse(string $data, int $status = 200): ResponseInterface
     {
         $this->serverResponse->getBody()->write($data);
 
@@ -54,9 +54,7 @@ abstract class BaseControllerAbstract
      */
     protected function getView(array $data = [], ?string $view = null, bool $useLayout = true, ?string $layoutFile = null, ?int $status = 200): ResponseInterface
     {
-        $view ??= $this->getAutoDetectedView();
-
-        // include global data vars
+         // include global data vars
         $data = $data + $this->data;
 
         // capitalize template path
@@ -73,28 +71,14 @@ abstract class BaseControllerAbstract
             ->setTemplateDir(__DIR__ . '/../' . $viewsPath)
             ->setTemplateVar('appViewContent')
             ->setLayoutFile($layoutFile)
+            ->setBacktraceIndex(3)
+            ->setStripStringFromTemplateFile('UseCase__invoke')
             ->setTemplate($view)
             ->setUseLayout($useLayout)
             ->setStatus($status)
             ->generatedView();
 
         return $this->getHttpResponse($view, $status);
-    }
-
-    private function getAutoDetectedView(): string
-    {
-        $useCaseFileName = '';
-        $backtrace = \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-        if (isset($backtrace[1]['file']))
-            $useCaseFileName = $backtrace[1]['file'];
-
-        $useCaseFileName = \strrchr($useCaseFileName, '/');
-        $useCaseFileName = $useCaseFileName ? $useCaseFileName : '';
-
-        $useCaseFileName = \strstr($useCaseFileName, 'UseCase.php', true);
-        $useCaseFileName = $useCaseFileName ? $useCaseFileName : '';
-
-        return \trim($useCaseFileName, '/');
     }
 
     protected function redirect(string $link, string $method = 'location', int $seconds = 0): void

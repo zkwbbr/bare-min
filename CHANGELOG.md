@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.9 - 2022-08-03
+
+### Fixed
+
+- Make sure AntiXssMiddleware handles json and form data.
+
 ## 1.0.8 - 2022-07-21
 
 ### Fixed

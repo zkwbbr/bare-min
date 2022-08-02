@@ -18,6 +18,48 @@ final class AntiXssMiddleware implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $contentType = $request->getHeaderLine('content-type');
+
+        // ------------------------------------------------
+
+        if ($contentType == 'application/json')
+            return $this->processedJson($request, $handler);
+
+        // ------------------------------------------------
+
+        $formDataContentTypes = [
+            'application/x-www-form-urlencoded',
+            'multipart/form-data'
+        ];
+
+        if (\in_array($contentType, $formDataContentTypes))
+            return $this->processedFormData($request, $handler);
+
+        // ------------------------------------------------
+
+        return $handler->handle($request);
+    }
+
+    /**
+     * Recursive version of \array_map();
+     *
+     * Credit: https://stackoverflow.com/a/39637749/748789
+     *
+     * @param callable $callback
+     * @param mixed[] $array
+     * @return mixed[]
+     */
+    private function arrayMapRecursive(callable $callback, array $array): array
+    {
+        $func = function ($item) use (&$func, &$callback) {
+            return \is_array($item) ? \array_map($func, $item) : \call_user_func($callback, $item);
+        };
+
+        return \array_map($func, $array);
+    }
+
+    private function processedJson(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
         $stream = $request->getBody();
         $stream->rewind();
         $contents = $stream->getContents();
@@ -41,25 +83,32 @@ final class AntiXssMiddleware implements MiddlewareInterface
         $stream = $streamFactory->createStream((string) \json_encode($data));
         $request = $request->withBody($stream);
 
+        // ------------------------------------------------
+
         return $handler->handle($request);
     }
 
-    /**
-     * Recursive version of \array_map();
-     *
-     * Credit: https://stackoverflow.com/a/39637749/748789
-     *
-     * @param callable $callback
-     * @param mixed[] $array
-     * @return mixed[]
-     */
-    private function arrayMapRecursive(callable $callback, array $array): array
+    private function processedFormData(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $func = function ($item) use (&$func, &$callback) {
-            return \is_array($item) ? \array_map($func, $item) : \call_user_func($callback, $item);
-        };
+        $parsedBody = $request->getParsedBody();
 
-        return \array_map($func, $array);
+        // ------------------------------------------------
+
+        $data = $this->arrayMapRecursive(
+            function ($item) {
+                $s = (new AntiXSS())->xss_clean($item); // @phpstan-ignore-line
+                if (\is_string($s))
+                    $s = \strip_tags($s); // we need to \strip_tags() because AntiXSS does not strip all HTML tags
+                return $s;
+            },
+            $parsedBody
+        );
+
+        // ------------------------------------------------
+
+        $request = $request->withParsedBody($data);
+
+        return $handler->handle($request);
     }
 
 }

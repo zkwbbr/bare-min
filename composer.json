@@ -24,13 +24,13 @@
         "robmorgan/phinx": "0.12.*",
         "respect/validation": "2.2.*",
         "filp/whoops": "2.14.*",
-        "laminas/laminas-diactoros": "2.7.*",
+        "laminas/laminas-diactoros": "2.14.*",
         "laminas/laminas-httphandlerrunner": "2.1.*",
         "league/route": "5.1.*",
         "league/container": "4.1.*",
         "middlewares/shutdown": "2.0.*",
         "nyholm/dsn": "2.0.*",
-        "voku/anti-xss": "4.1.*"        
+        "voku/anti-xss": "4.1.*"
     },
     "autoload": {
         "psr-4": {

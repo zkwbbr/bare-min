@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.1.0 - 2022-08-23
+
+### Added
+
+- Add viewsPathLowercase in app.yaml.
+
 ## 1.0.9 - 2022-08-03
 
 ### Fixed

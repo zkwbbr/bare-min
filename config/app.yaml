@@ -11,6 +11,7 @@ dateTimeMysqlFormat: Y-m-d H:i:s
 dateTimeHumanFormat: r
 
 viewsPath: Views/Default/
+viewsPathLowercase: views/default/
 
 languagesPath: src/App/Languages/
 language: en-US

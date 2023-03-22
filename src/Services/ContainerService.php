@@ -27,37 +27,53 @@ final class ContainerService extends AbstractServiceProvider
 
     public function register(): void
     {
-        $encryptedCreds = (string) \file_get_contents(__DIR__ . '/../../' . Cfg::credsPath);
+        $encryptedCreds = $this->encryptedCreds();
         $credsYaml = \Zkwbbr\Utils\Decrypted::x($encryptedCreds, \App\Config\Key::getKey());
         $creds = (array) \Symfony\Component\Yaml\Yaml::parse($credsYaml);
         $appCfg = new \App\Config\App($creds);
 
         // ------------------------------------------------
 
-        $prodDbDsn = \Nyholm\Dsn\DsnParser::parse($appCfg->getDbDsn());
+        $dbDsn = \Nyholm\Dsn\DsnParser::parse($appCfg->getDbDsn());
 
-        $dbName = \trim((string) $prodDbDsn->getPath(), '/');
+        $dbName = \trim((string) $dbDsn->getPath(), '/');
 
         // ------------------------------------------------
 
         $this->getContainer()
             ->add(DataMapper\Config::class)
-            ->addMethodCall('setDsn', ['mysql:host=' . $prodDbDsn->getHost() . ';dbname=' . $dbName])
-            ->addMethodCall('setDbUser', [$prodDbDsn->getUser()])
-            ->addMethodCall('setDbPass', [$prodDbDsn->getPassword()]);
+            ->addMethodCall('setDsn', ['mysql:host=' . $dbDsn->getHost() . ';dbname=' . $dbName])
+            ->addMethodCall('setDbUser', [$dbDsn->getUser()])
+            ->addMethodCall('setDbPass', [$dbDsn->getPassword()]);
 
         // ------------------------------------------------
 
         $this->getContainer()
             ->add(DataMapper\DataMapper::class)
-            ->addArgument($this->getContainer()->get(DataMapper\Adapters\AtlasQuery::class));
+            ->addArgument(DataMapper\Adapters\AtlasQuery::class);
 
         // ------------------------------------------------
 
         $this->getContainer()
             ->add(Cfg::class)
-            ->addArgument($this->getContainer()->get(DataMapper\DataMapper::class))
+            ->addArgument(DataMapper\DataMapper::class)
             ->addArgument($creds);
+    }
+
+    /**
+     * Get encrypted creds in env vars or in file
+     * Note: In prod, use env vars if using VPS/Docker, only use file if on shared server or in dev mode
+     *
+     * @return string
+     */
+    private function encryptedCreds(): string
+    {
+        $encryptedCreds = \getenv('APP_ENC_CREDS');
+
+        if ($encryptedCreds !== false)
+            return $encryptedCreds;
+
+        return (string) \file_get_contents(__DIR__ . '/../../' . Cfg::credsPath);
     }
 
 }

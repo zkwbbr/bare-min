@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * This script will output the encrypted string of /config/creds/*.raw.yaml
+ *
+ * Parameters: *
+ * $argv[1] Environment file to encrypt e.g., 'dev' or 'prod'
+ *
+ * Note: Remember to set the third app key as env var in the cmd line if not set in docker
+ * e.g., export APP_KEY_2='1234567890'
+ */
+declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+if (!$argv[1])
+    exit("Error: 1 argument required: Enviroment e.g., 'dev' or 'prod' '\n");
+
+$data = \file_get_contents(__DIR__ . '/../config/creds/' . $argv[1] . '.raw.yaml');
+
+$appKey = \App\Config\Key::getKey();
+
+echo \Zkwbbr\Utils\Encrypted::x($data, $appKey) . "\n";

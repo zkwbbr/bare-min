@@ -26,7 +26,7 @@ require APP_ROOT_DIR . 'vendor/autoload.php';
 // fundamental config
 // ----------------------------------------------
 
-\define('APP_DEVELOPMENT_MODE', \getenv('APP_ENV') == 'dev');
+\define('APP_DEVELOPMENT_MODE', \getenv('APP_ENV') === 'dev');
 \define('APP_ERROR_LOG_DIR', APP_ROOT_DIR . 'logs/app/error/'); // used by /src/Framework/whoops.php
 \define('APP_ERROR_LOG_TIMEZONE', 'UTC'); // set this to the timezone of whoever reads the error logs
 \define('APP_SESSION_NAME', ''); // 12 chars alphanumeric (can't be all numbers)
@@ -36,6 +36,8 @@ require APP_ROOT_DIR . 'vendor/autoload.php';
 // ------------------------------------------------
 
 $diContainer = \App\Factories\DiContainer::getInstance();
+
+$appCfg = \App\Factories\AppCfg::getInstance();
 
 // ------------------------------------------------
 
@@ -67,22 +69,20 @@ if (!APP_DEVELOPMENT_MODE)
 
 // ------------------------------------------------
 
-$appCfg = \App\Factories\AppCfg::getInstance();
-
 \date_default_timezone_set($appCfg->getTimezoneOnCreate());
 
 // ----------------------------------------------
 // use cookies as session handler in prod only because Whoops errors are causing "headers already sent" issues.
 // comment this block if you don't want to use cookie sessions.
 // ----------------------------------------------
-if (!APP_DEVELOPMENT_MODE) {
-
-    $options['path'] = '/';
-    $options = $options + ['secure' => true, 'httponly' => true];
-
-    $handler = new \MetaRush\CookieSessions\Handler(\App\Config\Key::getKey(), $options);
-    \session_set_save_handler($handler, true);
-}
+//if (!APP_DEVELOPMENT_MODE) {
+//
+//    $options['path'] = '/';
+//    $options = $options + ['secure' => true, 'httponly' => true];
+//
+//    $handler = new \MetaRush\CookieSessions\Handler(\App\Config\Key::getKey(), $options);
+//    \session_set_save_handler($handler, true);
+//}
 
 // ----------------------------------------------
 // dispatch routes

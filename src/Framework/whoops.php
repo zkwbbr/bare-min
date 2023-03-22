@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Config\Cfg;
 use MetaRush\LogOnce\LogOnce;
 use MetaRush\LogOnce\Pdo\Adapter as PdoLogger;
 use MetaRush\LogOnce\FileSystem\Adapter as FileSystemLogger;
@@ -96,7 +95,7 @@ function getTraceAsStringUntruncated(\Throwable $ex): string
 $whoops = new \Whoops\Run;
 
 /** @var \League\Container\Container $diContainer */
-$whoops->pushHandler(function ($ex) use ($diContainer) {
+$whoops->pushHandler(function ($ex) use ($diContainer, $appCfg) {
 
     $errorHash = (string) \crc32($ex->getMessage() . $ex->getFile() . $ex->getLine() . $ex->getTraceAsString());
 
@@ -130,13 +129,6 @@ $whoops->pushHandler(function ($ex) use ($diContainer) {
             ->log();
 
     } else {
-
-        $encryptedCreds = (string) \file_get_contents(__DIR__ . '/../../' . Cfg::prodCredsPath);
-        $credsYaml = \Zkwbbr\Utils\Decrypted::x($encryptedCreds, \App\Config\Key::getKey());
-        $creds = (array) \Symfony\Component\Yaml\Yaml::parse($credsYaml);
-        $appCfg = new \App\Config\App($creds);
-
-        // ------------------------------------------------
 
         $subject = 'Error alert on ' . $appCfg->getAppName() . ' #' . $errorHash;
 

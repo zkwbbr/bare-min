@@ -1,5 +1,17 @@
 # CHANGELOG
 
+# 1.1.2 - 2023-03-23
+
+### Fixed
+
+- Fix branch issue
+
+# 1.1.1 - 2023-03-22
+
+### Fixed
+
+- Improve usage of credsPath
+
 ## 1.1.0 - 2022-08-23
 
 ### Added

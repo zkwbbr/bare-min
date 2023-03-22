@@ -2,7 +2,7 @@
 # system config
 # ------------------------------
 
-appName: # name of your app without spaces
+appName: myApp # name of your app without spaces
 
 timezoneOnCreate: UTC # recommended to use UTC when storing time then just adjust time upon read
 timezoneOnRead: UTC # change to your local timezone
@@ -16,7 +16,7 @@ viewsPathLowercase: views/default/
 languagesPath: src/App/Languages/
 language: en-US
 
-credsPath:
+credsPath: config/creds/creds.yaml.enc # used in dev mode or in shared server (e.g., Cpanel)
 
 # ------------------------------
 # db tables
@@ -24,6 +24,12 @@ credsPath:
 
 errorLogTable: errorLog
 optionsTable: options
+
+mrfwTempBanTable: mrfwTempBan
+mrfwExtendedBanTable: mrfwExtendedBan
+mrfwWhitelistTable: mrfwWhitelist
+mrfwFailCountTable: mrfwFailCount
+mrfwBlockCountTable: mrfwBlockCount
 
 # ------------------------------
 # app config

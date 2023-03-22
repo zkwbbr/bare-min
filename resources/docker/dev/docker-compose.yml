@@ -1,0 +1,15 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ../../../
+      dockerfile: resources/docker/dev/Dockerfile
+    image: ${APP_NAME}:dev
+    container_name: ${APP_NAME}-app
+    ports:
+      - ${APP_PORT}:80
+    volumes:
+      - /var/www/${APP_NAME}/:/srv/app/
+    environment:
+      APP_ENV: dev
+      APP_KEY: ${APP_KEY}

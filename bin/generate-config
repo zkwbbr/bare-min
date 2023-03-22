@@ -1,0 +1,48 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * This script is a shortcut command to generate classes in /src/Config/ folder
+ *
+ * Note: In the --namespace parameter of vendor/metarush/getter/bin/generate
+ * command below, you need to escape the \ (backslash) twice, hence you see 3 \ (backslashes).
+ */
+declare(strict_types=1);
+
+// ------------------------------------------------
+// generate config codes
+// ------------------------------------------------
+
+if (!$argv[1])
+    exit("Error: argument 1 required: ClassName e.g., 'App', 'Creds'\n");
+
+switch ($argv[1]) {
+
+    case 'App';
+        $cmd = 'vendor/metarush/getter/bin/generate -a yaml -c App -s config/app.yaml -l src/Config/ --namespace App\\\Config --extendClass Creds --callParent --constants';
+        break;
+
+    case 'Creds';
+        $cmd = 'vendor/metarush/getter/bin/generate -a yaml -c Creds -s config/creds/dev.raw.yaml -l src/Config/ --namespace App\\\Config --dummify --dataReplacer';
+        break;
+
+    default:
+        exit('Error: Invalid parameter ' . $argv[1] . PHP_EOL);
+}
+
+$res = \exec($cmd, $output, $code);
+
+echo PHP_EOL;
+print_r($res);
+
+if (!$output)
+    echo 'OK' . PHP_EOL;
+else
+    print_r($output);
+
+if (!$code)
+    echo 'OK' . PHP_EOL;
+else
+    print_r($code);
+
+echo PHP_EOL;

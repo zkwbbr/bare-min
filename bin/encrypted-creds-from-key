@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+/**
+ * This script will output the encrypted string of /config/creds/*.raw.yaml while you supply the
+ * whole key as 2nd param. This is usually used to generate the prod creds. You can then use the
+ * (divided) keys and the newly generated creds as env vars in your CI/CD process
+ *
+ * Parameters:
+ * $argv[1] Environment file to encrypt e.g., 'dev' or 'prod'
+ * $argv[2] Whole encryption key generated from vendor/bin/generate-defuse-key
+ *
+ */
+declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+if (!$argv[1])
+    exit("Error: 1 argument required: Enviroment e.g., 'dev' or 'prod'\n");
+
+if (!$argv[2])
+    exit("Error: 2 argument required: Whole encryption key generated from vendor/bin/generate-defuse-key\n");
+
+$data = \file_get_contents(__DIR__ . '/../config/creds/' . $argv[1] . '.raw.yaml');
+
+$key = $argv[2];
+
+echo \Zkwbbr\Utils\Encrypted::x($data, $key) . "\n";

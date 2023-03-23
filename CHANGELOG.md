@@ -1,5 +1,11 @@
 # CHANGELOG
 
+# 1.1.4 - 2023-03-23
+
+### Fixed
+
+- Add resources/ dir in .gitignore.
+
 # 1.1.3 - 2023-03-23
 
 ### Fixed

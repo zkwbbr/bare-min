@@ -2,7 +2,7 @@
 /.phpunit.result.cache
 /vendor/
 /nbproject/
-/resources/notes/
+/resources/
 /config/creds/
 /tests/mycoverage/
 .env

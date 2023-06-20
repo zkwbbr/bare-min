@@ -24,7 +24,7 @@
         "robmorgan/phinx": "0.12.*",
         "respect/validation": "2.2.*",
         "filp/whoops": "2.14.*",
-        "laminas/laminas-diactoros": "2.14.*",
+        "laminas/laminas-diactoros": "2.25.*",
         "laminas/laminas-httphandlerrunner": "2.1.*",
         "league/route": "5.1.*",
         "league/container": "4.1.*",

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### Fixed
+
+# 1.1.5 - 2023-06-21
+
+- Update laminas/diactoros to 2.25 due to security advisory
+
 # 1.1.4 - 2023-03-23
 
 ### Fixed

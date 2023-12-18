@@ -12,25 +12,25 @@
     ],
     "require": {
         "php": ">=8.1",
-        "metarush/email-fallback": "4.0.*",
-        "metarush/data-mapper": "1.7.*",
-        "metarush/log-once": "1.0.*",
-        "metarush/lang": "1.0.*",
-        "metarush/firewall": "1.1.*",
-        "metarush/getter": "3.2.*",
-        "metarush/cookie-sessions": "3.1.*",
-        "zkwbbr/view": "1.2.*",
-        "zkwbbr/utils": "2.1.*",
-        "robmorgan/phinx": "0.12.*",
-        "respect/validation": "2.2.*",
-        "filp/whoops": "2.14.*",
-        "laminas/laminas-diactoros": "2.25.*",
-        "laminas/laminas-httphandlerrunner": "2.1.*",
-        "league/route": "5.1.*",
-        "league/container": "4.1.*",
-        "middlewares/shutdown": "2.0.*",
-        "nyholm/dsn": "2.0.*",
-        "voku/anti-xss": "4.1.*"
+        "metarush/email-fallback": "4.*",
+        "metarush/data-mapper": "1.*",
+        "metarush/log-once": "1.*",
+        "metarush/lang": "1.*",
+        "metarush/firewall": "1.*",
+        "metarush/getter": "3.*",
+        "metarush/cookie-sessions": "3.*",
+        "zkwbbr/view": "1.*",
+        "zkwbbr/utils": "2.*",
+        "robmorgan/phinx": "0.*",
+        "respect/validation": "2.*",
+        "filp/whoops": "2.*",
+        "laminas/laminas-diactoros": "2.*",
+        "laminas/laminas-httphandlerrunner": "2.*",
+        "league/route": "5.*",
+        "league/container": "4.*",
+        "middlewares/shutdown": "2.*",
+        "nyholm/dsn": "2.*",
+        "voku/anti-xss": "4.*"
     },
     "autoload": {
         "psr-4": {
@@ -40,8 +40,8 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
-		"phpunit/phpunit": "9.5.*",
-		"phpstan/phpstan": "1.7.*"
+		"phpunit/phpunit": "9.*",
+		"phpstan/phpstan": "1.*"
     },
     "config": {
         "platform-check": true

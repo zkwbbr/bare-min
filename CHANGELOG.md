@@ -2,9 +2,15 @@
 
 ### Fixed
 
+# 1.1.6 - 2023-12-19
+
+- Relax versioning requirement of default Composer packages to * in MINOR.
+
+### Fixed
+
 # 1.1.5 - 2023-06-21
 
-- Update laminas/diactoros to 2.25 due to security advisory
+- Update laminas/diactoros to 2.25 due to security advisory.
 
 # 1.1.4 - 2023-03-23
 

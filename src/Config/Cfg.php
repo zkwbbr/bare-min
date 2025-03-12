@@ -8,11 +8,12 @@ use MetaRush\DataMapper\DataMapper;
 
 class Cfg extends App
 {
-    public function __construct(DataMapper $dataMapper, array $cfgData)
+    public function __construct(
+        protected DataMapper $dataMapper,
+        array $cfgData)
     {
         parent::__construct($cfgData);
 
         $this->dataMapper = $dataMapper;
     }
-
 }

@@ -47,14 +47,14 @@ abstract class BaseControllerAbstract
      *
      * @param array $data
      * @param string|null $view
-     * @param bool $useLayout
+     * @param bool|null $useLayout
      * @param string|null $layoutFile
      * @param int|null $status
      * @return ResponseInterface
      */
-    protected function getView(array $data = [], ?string $view = null, bool $useLayout = true, ?string $layoutFile = null, ?int $status = 200): ResponseInterface
+    protected function getView(array $data = [], ?string $view = null, ?bool $useLayout = null, ?string $layoutFile = null, ?int $status = 200): ResponseInterface
     {
-         // include global data vars
+        // include global data vars
         $data = $data + $this->data;
 
         // capitalize template path
@@ -62,6 +62,9 @@ abstract class BaseControllerAbstract
         $viewsPath = \str_replace('/', ' ', $viewsPath);
         $viewsPath = \ucwords($viewsPath);
         $viewsPath = \str_replace(' ', '/', $viewsPath);
+
+        // use layout
+        $useLayout ??= true;
 
         // determine layout file
         $layoutFile ??= 'defaultLayout';
@@ -129,5 +132,4 @@ abstract class BaseControllerAbstract
 
         return $this->getView([], 'stop', false);
     }
-
 }

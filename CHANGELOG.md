@@ -2,6 +2,13 @@
 
 ### Fixed
 
+# 1.1.7 - 2025-03-12
+
+- Make $useLayout nullable in BaseControllerAbstract->getView().
+- Declare $dataMapper as protected property in App\Config\Cfg because dynamic properties are deprecated in PHP 8.2.
+
+### Fixed
+
 # 1.1.6 - 2023-12-19
 
 - Relax versioning requirement of default Composer packages to * in MINOR.
